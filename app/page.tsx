@@ -13,7 +13,7 @@ export default function LandingPage() {
             <div className="flex items-center space-x-2">
               <Video className="h-8 w-8 text-primary-600" />
               <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
-                MeetWise
+                AutoNote
               </span>
             </div>
             <div className="flex items-center space-x-4">
@@ -164,7 +164,7 @@ export default function LandingPage() {
             Ready to Transform Your Meetings?
           </h2>
           <p className="text-xl text-primary-100 mb-8">
-            Join thousands of teams using MeetWise for smarter, more productive meetings
+            Join thousands of teams using AutoNote for smarter, more productive meetings
           </p>
           <Link
             href="/register"
@@ -181,10 +181,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <Video className="h-6 w-6 text-primary-400" />
-            <span className="text-xl font-bold text-white">MeetWise</span>
+            <span className="text-xl font-bold text-white">AutoNote</span>
           </div>
           <p className="text-sm">
-            © 2025 MeetWise. All rights reserved. Built with ❤️ for better meetings.
+            © 2025 AutoNote. All rights reserved. Built with ❤️ for better meetings.
           </p>
         </div>
       </footer>

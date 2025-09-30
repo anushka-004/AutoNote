@@ -1,8 +1,8 @@
-# MeetWise - Complete Features Guide
+# AutoNote - Complete Features Guide
 
 ## 🎯 Overview
 
-MeetWise is a Google Meet-inspired video conferencing platform with AI-powered meeting notes generation. This document outlines all implemented features.
+AutoNote is a Google Meet-inspired video conferencing platform with AI-powered meeting notes generation. This document outlines all implemented features.
 
 ---
 

@@ -1,9 +1,9 @@
-# Developer Guide - MeetWise
+# Developer Guide - AutoNote
 
 ## 🛠️ Quick Reference for Developers
 
 ### Project Overview
-MeetWise is a Next.js 14 application built with TypeScript and TailwindCSS, featuring a Google Meet-like interface with AI-powered meeting notes.
+AutoNote is a Next.js 14 application built with TypeScript and TailwindCSS, featuring a Google Meet-like interface with AI-powered meeting notes.
 
 ---
 

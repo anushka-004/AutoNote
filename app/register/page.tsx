@@ -36,7 +36,7 @@ export default function RegisterPage() {
           <Link href="/" className="inline-flex items-center space-x-2 mb-6">
             <Video className="h-10 w-10 text-primary-600" />
             <span className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
-              MeetWise
+              AutoNote
             </span>
           </Link>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Create your account</h2>

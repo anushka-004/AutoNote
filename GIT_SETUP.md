@@ -1,4 +1,4 @@
-# 🚀 Git Setup Guide for MeetWise
+# 🚀 Git Setup Guide for AutoNote
 
 ## Quick Start - Upload to GitHub
 
@@ -20,7 +20,7 @@ git add .
 ### Step 3: Create Initial Commit
 
 ```bash
-git commit -m "Initial commit: MeetWise - AI-Powered Meeting Platform
+git commit -m "Initial commit: AutoNote - AI-Powered Meeting Platform
 
 - Complete landing page with features showcase
 - Login and registration pages
@@ -111,7 +111,7 @@ git init
 git add .
 
 # Create initial commit
-git commit -m "Initial commit: MeetWise - AI-Powered Meeting Platform"
+git commit -m "Initial commit: AutoNote - AI-Powered Meeting Platform"
 
 # Add remote (replace YOUR_USERNAME)
 git remote add origin https://github.com/YOUR_USERNAME/meetwise.git
@@ -214,7 +214,7 @@ Create a `.gitattributes` file for consistent line endings:
 ### Add Repository Description
 
 ```
-🎥 MeetWise - AI-Powered Video Conferencing Platform with intelligent meeting notes generation. Built with Next.js 14, TypeScript, and TailwindCSS.
+🎥 AutoNote - AI-Powered Video Conferencing Platform with intelligent meeting notes generation. Built with Next.js 14, TypeScript, and TailwindCSS.
 ```
 
 ### Add Topics
@@ -438,6 +438,6 @@ git checkout -- file
 
 ## 🎉 You're Ready!
 
-Your project is now ready to be uploaded to GitHub. Follow the steps above and your MeetWise application will be live on GitHub in minutes!
+Your project is now ready to be uploaded to GitHub. Follow the steps above and your AutoNote application will be live on GitHub in minutes!
 
 **Need help?** Check the troubleshooting section or GitHub's documentation.

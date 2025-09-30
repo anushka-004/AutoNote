@@ -1,4 +1,4 @@
-# MeetWise Setup Guide
+# AutoNote Setup Guide
 
 ## 🚀 Quick Start
 

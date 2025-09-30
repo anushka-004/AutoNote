@@ -1,4 +1,4 @@
-# 🎉 MeetWise - Project Complete!
+# 🎉 AutoNote - Project Complete!
 
 ## ✅ Project Status: READY FOR DEVELOPMENT
 
@@ -367,7 +367,7 @@ When you're ready to add backend functionality:
 
 ## 🎊 You're All Set!
 
-Your MeetWise application is ready to go. Install dependencies, start the dev server, and begin exploring your new video conferencing platform!
+Your AutoNote application is ready to go. Install dependencies, start the dev server, and begin exploring your new video conferencing platform!
 
 ```bash
 npm install

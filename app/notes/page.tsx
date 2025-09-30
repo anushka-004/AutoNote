@@ -156,7 +156,7 @@ export default function NotesPage() {
           <Link href="/" className="flex items-center space-x-2">
             <Video className="h-8 w-8 text-primary-600" />
             <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
-              MeetWise
+              AutoNote
             </span>
           </Link>
         </div>

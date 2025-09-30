@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MeetWise - AI-Powered Meeting Platform",
+  title: "AutoNote - AI-Powered Meeting Platform",
   description: "Modern video conferencing with intelligent meeting notes generation",
 };
 
