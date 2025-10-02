@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Video, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { Video, Mail, Lock, User, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { useAuth } from '@/lib/auth-context';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { register, isLoading, error } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -15,17 +17,54 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: '',
   });
+  const [localError, setLocalError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement actual registration
+    setLocalError(null);
+    
+    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
+      setLocalError('Passwords do not match. Please make sure both passwords are identical.');
       return;
     }
-    console.log('Registration attempt:', formData);
-    // For now, redirect to dashboard
-    router.push('/dashboard');
+    
+    // Validate name
+    if (formData.name.trim().length < 2) {
+      setLocalError('Please enter your full name (at least 2 characters).');
+      return;
+    }
+    
+    try {
+      await register({
+        email: formData.email,
+        username: formData.name.toLowerCase().replace(/\s+/g, '_'),
+        full_name: formData.name,
+        password: formData.password,
+      });
+      router.push('/dashboard');
+    } catch (error) {
+      let errorMessage = 'Unable to create account. Please try again.';
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+        
+        // Provide more specific error messages
+        if (errorMessage.includes('Email already registered')) {
+          errorMessage = 'This email is already registered. Please login instead or use a different email.';
+        } else if (errorMessage.includes('Username already taken')) {
+          errorMessage = 'This username is already taken. Please try a different name.';
+        } else if (errorMessage.includes('Password must')) {
+          // Keep the original password validation message
+          errorMessage = error.message;
+        } else if (errorMessage.includes('Unable to connect')) {
+          errorMessage = 'Cannot connect to server. Please make sure the backend is running.';
+        }
+      }
+      
+      setLocalError(errorMessage);
+      console.error('Registration error:', error);
+    }
   };
 
   return (
@@ -45,6 +84,14 @@ export default function RegisterPage() {
 
         {/* Register Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+          {/* Error Display */}
+          {(localError || error) && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
+              <AlertCircle className="h-5 w-5 text-red-500" />
+              <p className="text-red-700 text-sm">{String(localError || error)}</p>
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name Field */}
             <div>
@@ -61,7 +108,7 @@ export default function RegisterPage() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-gray-900"
                   placeholder="John Doe"
                 />
               </div>
@@ -82,7 +129,7 @@ export default function RegisterPage() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-gray-900"
                   placeholder="you@example.com"
                 />
               </div>
@@ -103,7 +150,7 @@ export default function RegisterPage() {
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-gray-900"
                   placeholder="••••••••"
                 />
                 <button
@@ -118,6 +165,9 @@ export default function RegisterPage() {
                   )}
                 </button>
               </div>
+              <p className="mt-1 text-xs text-gray-500">
+                Must be 8+ characters with uppercase, lowercase, and a number
+              </p>
             </div>
 
             {/* Confirm Password Field */}
@@ -135,7 +185,7 @@ export default function RegisterPage() {
                   required
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-gray-900"
                   placeholder="••••••••"
                 />
                 <button
@@ -175,9 +225,17 @@ export default function RegisterPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all shadow-lg hover:shadow-xl font-semibold"
+              disabled={isLoading}
+              className="w-full py-3 px-4 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all shadow-lg hover:shadow-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
-              Create Account
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Creating Account...
+                </>
+              ) : (
+                'Create Account'
+              )}
             </button>
           </form>
 

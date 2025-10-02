@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AutoNote Connection Test</title>
+    <style>
+        body { font-family: Arial; padding: 40px; background: #f5f5f5; }
+        .test { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; }
+        .success { border-left: 4px solid #22c55e; }
+        .error { border-left: 4px solid #ef4444; }
+        button { background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; margin: 5px; }
+        button:hover { background: #2563eb; }
+        pre { background: #1f2937; color: #10b981; padding: 15px; border-radius: 6px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 AutoNote Connection Test</h1>
+    
+    <div class="test" id="backend-test">
+        <h3>Backend Connection Test</h3>
+        <button onclick="testBackend()">Test Backend</button>
+        <div id="backend-result"></div>
+    </div>
+
+    <div class="test" id="register-test">
+        <h3>Registration Test</h3>
+        <button onclick="testRegister()">Test Register API</button>
+        <div id="register-result"></div>
+    </div>
+
+    <div class="test" id="login-test">
+        <h3>Login Test</h3>
+        <button onclick="testLogin()">Test Login API</button>
+        <div id="login-result"></div>
+    </div>
+
+    <script>
+        async function testBackend() {
+            const result = document.getElementById('backend-result');
+            result.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:8000/health');
+                const data = await response.json();
+                result.innerHTML = `
+                    <p style="color: green;">✅ Backend is running!</p>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `
+                    <p style="color: red;">❌ Backend connection failed!</p>
+                    <pre>${error.message}</pre>
+                    <p><strong>Solution:</strong> Make sure backend is running on port 8000</p>
+                `;
+            }
+        }
+
+        async function testRegister() {
+            const result = document.getElementById('register-result');
+            result.innerHTML = '<p>Testing registration...</p>';
+            
+            const testUser = {
+                email: `test${Date.now()}@example.com`,
+                username: `testuser${Date.now()}`,
+                full_name: 'Test User',
+                password: 'Test1234'
+            };
+
+            try {
+                const response = await fetch('http://localhost:8000/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testUser)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `
+                        <p style="color: green;">✅ Registration works!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <p style="color: orange;">⚠️ Registration returned error:</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <p style="color: red;">❌ Registration failed!</p>
+                    <pre>${error.message}</pre>
+                    <p><strong>Error Type:</strong> ${error.name}</p>
+                    <p><strong>This usually means:</strong> Backend not running or CORS issue</p>
+                `;
+            }
+        }
+
+        async function testLogin() {
+            const result = document.getElementById('login-result');
+            result.innerHTML = '<p>Testing login...</p>';
+            
+            const credentials = {
+                email: 'test@example.com',
+                password: 'Test1234'
+            };
+
+            try {
+                const response = await fetch('http://localhost:8000/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(credentials)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `
+                        <p style="color: green;">✅ Login works!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <p style="color: orange;">⚠️ Login returned error:</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p><strong>Try:</strong> Reset database with: python reset_db.py</p>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <p style="color: red;">❌ Login failed!</p>
+                    <pre>${error.message}</pre>
+                    <p><strong>Error Type:</strong> ${error.name}</p>
+                `;
+            }
+        }
+
+        // Auto-test backend on load
+        window.onload = () => testBackend();
+    </script>
+</body>
+</html>

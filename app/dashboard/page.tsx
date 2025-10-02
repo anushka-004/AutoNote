@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Video, 
   Calendar, 
@@ -15,6 +16,7 @@ import {
   TrendingUp,
   ChevronRight
 } from 'lucide-react';
+import { useAuth } from '@/lib/auth-context';
 
 // Mock data for meetings
 const mockMeetings = [
@@ -61,11 +63,36 @@ const mockMeetings = [
 ];
 
 export default function DashboardPage() {
+  const { user, logout, isLoading } = useAuth();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredMeetings = mockMeetings.filter(meeting =>
     meeting.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+  };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect if not authenticated
+  if (!user) {
+    router.push('/login');
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -110,14 +137,17 @@ export default function DashboardPage() {
         <div className="p-4 border-t border-gray-200">
           <div className="flex items-center space-x-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center text-white font-semibold">
-              JD
+              {user.full_name.split(' ').map(n => n[0]).join('').toUpperCase()}
             </div>
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">John Doe</p>
-              <p className="text-xs text-gray-500">john@example.com</p>
+              <p className="text-sm font-medium text-gray-900">{user.full_name}</p>
+              <p className="text-xs text-gray-500">{user.email}</p>
             </div>
           </div>
-          <button className="w-full flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          >
             <LogOut className="h-4 w-4" />
             <span>Sign Out</span>
           </button>
@@ -128,8 +158,8 @@ export default function DashboardPage() {
       <main className="ml-64 p-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, John!</h1>
-          <p className="text-gray-600">Here's what's happening with your meetings today.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, {user.full_name.split(' ')[0]}!</h1>
+          <p className="text-gray-600">Here&apos;s what&apos;s happening with your meetings today.</p>
         </div>
 
         {/* Stats Cards */}
