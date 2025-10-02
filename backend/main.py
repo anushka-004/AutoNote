@@ -76,6 +76,8 @@ async def register_user(user: UserCreate, db: Session = Depends(get_db)):
     - **full_name**: User's full name
     - **password**: User's password (min 8 chars, must contain uppercase, lowercase, and digit)
     """
+    print(f"📝 Register attempt - Email: {user.email}, Username: {user.username}, Full Name: {user.full_name}")
+    
     # Check if user already exists
     existing_user_email = get_user_by_email(db, user.email)
     if existing_user_email:
@@ -120,6 +122,8 @@ async def login_user(user_credentials: UserLogin, db: Session = Depends(get_db))
     - **email**: User's email address
     - **password**: User's password
     """
+    print(f"🔑 Login attempt - Email: {user_credentials.email}")
+    
     # Authenticate user
     user = authenticate_user(db, user_credentials.email, user_credentials.password)
     if not user:
