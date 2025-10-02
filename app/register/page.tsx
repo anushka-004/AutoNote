@@ -68,22 +68,22 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-dark via-background to-dark flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
       <div className="max-w-md w-full">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-            <Video className="h-10 w-10 text-primary-600" />
-            <span className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
+            <Video className="h-10 w-10 text-primary" />
+            <span className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               AutoNote
             </span>
           </Link>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Create your account</h2>
-          <p className="text-gray-600">Start having smarter meetings today</p>
+          <h2 className="text-3xl font-bold text-text mb-2">Create your account</h2>
+          <p className="text-text/80">Start having smarter meetings today</p>
         </div>
 
         {/* Register Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div className="bg-background rounded-2xl shadow-xl p-8 border border-primary/20">
           {/* Error Display */}
           {(localError || error) && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
@@ -95,12 +95,12 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name Field */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-text mb-2">
                 Full Name
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
+                  <User className="h-5 w-5 text-text/50" />
                 </div>
                 <input
                   id="name"
@@ -108,7 +108,7 @@ export default function RegisterPage() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-gray-900"
+                  className="block w-full pl-10 pr-3 py-3 border border-primary/30 bg-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text"
                   placeholder="John Doe"
                 />
               </div>
@@ -116,12 +116,12 @@ export default function RegisterPage() {
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-text mb-2">
                 Email Address
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
+                  <Mail className="h-5 w-5 text-text/50" />
                 </div>
                 <input
                   id="email"
@@ -129,7 +129,7 @@ export default function RegisterPage() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-gray-900"
+                  className="block w-full pl-10 pr-3 py-3 border border-primary/30 bg-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text"
                   placeholder="you@example.com"
                 />
               </div>
@@ -137,12 +137,12 @@ export default function RegisterPage() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-text mb-2">
                 Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-text/50" />
                 </div>
                 <input
                   id="password"
@@ -150,7 +150,7 @@ export default function RegisterPage() {
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-gray-900"
+                  className="block w-full pl-10 pr-12 py-3 border border-primary/30 bg-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text"
                   placeholder="••••••••"
                 />
                 <button
@@ -159,25 +159,25 @@ export default function RegisterPage() {
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeOff className="h-5 w-5 text-text/50 hover:text-text" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <Eye className="h-5 w-5 text-text/50 hover:text-text" />
                   )}
                 </button>
               </div>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-text/60">
                 Must be 8+ characters with uppercase, lowercase, and a number
               </p>
             </div>
 
             {/* Confirm Password Field */}
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-text mb-2">
                 Confirm Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-text/50" />
                 </div>
                 <input
                   id="confirmPassword"
@@ -185,7 +185,7 @@ export default function RegisterPage() {
                   required
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-gray-900"
+                  className="block w-full pl-10 pr-12 py-3 border border-primary/30 bg-dark rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text"
                   placeholder="••••••••"
                 />
                 <button
@@ -194,9 +194,9 @@ export default function RegisterPage() {
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
                   {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeOff className="h-5 w-5 text-text/50 hover:text-text" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <Eye className="h-5 w-5 text-text/50 hover:text-text" />
                   )}
                 </button>
               </div>
@@ -208,15 +208,15 @@ export default function RegisterPage() {
                 id="terms"
                 type="checkbox"
                 required
-                className="h-4 w-4 mt-1 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                className="h-4 w-4 mt-1 text-primary focus:ring-primary border-primary/30 rounded"
               />
-              <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
+              <label htmlFor="terms" className="ml-2 block text-sm text-text">
                 I agree to the{' '}
-                <Link href="#" className="text-primary-600 hover:text-primary-500 font-medium">
+                <Link href="#" className="text-primary hover:text-accent font-medium">
                   Terms of Service
                 </Link>{' '}
                 and{' '}
-                <Link href="#" className="text-primary-600 hover:text-primary-500 font-medium">
+                <Link href="#" className="text-primary hover:text-accent font-medium">
                   Privacy Policy
                 </Link>
               </label>
@@ -226,7 +226,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all shadow-lg hover:shadow-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              className="w-full py-3 px-4 bg-primary text-white rounded-lg hover:bg-accent transition-all shadow-lg hover:shadow-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               {isLoading ? (
                 <>
@@ -242,16 +242,16 @@ export default function RegisterPage() {
           {/* Divider */}
           <div className="mt-6 relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-primary/30"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+              <span className="px-2 bg-background text-text/70">Or sign up with</span>
             </div>
           </div>
 
           {/* Social Sign Up */}
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <button className="w-full py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all font-medium text-gray-700 flex items-center justify-center">
+            <button className="w-full py-3 px-4 border border-primary/30 rounded-lg hover:bg-dark transition-all font-medium text-text flex items-center justify-center">
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
@@ -272,7 +272,7 @@ export default function RegisterPage() {
               </svg>
               Google
             </button>
-            <button className="w-full py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all font-medium text-gray-700 flex items-center justify-center">
+            <button className="w-full py-3 px-4 border border-primary/30 rounded-lg hover:bg-dark transition-all font-medium text-text flex items-center justify-center">
               <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
@@ -281,9 +281,9 @@ export default function RegisterPage() {
           </div>
 
           {/* Sign In Link */}
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-sm text-text/80">
             Already have an account?{' '}
-            <Link href="/login" className="font-medium text-primary-600 hover:text-primary-500">
+            <Link href="/login" className="font-medium text-primary hover:text-accent">
               Sign in
             </Link>
           </p>
