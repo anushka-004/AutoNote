@@ -14,7 +14,11 @@ import {
   Clock,
   Users,
   TrendingUp,
-  ChevronRight
+  ChevronRight,
+  Mic,
+  Square,
+  Pause,
+  Play
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 
@@ -66,6 +70,9 @@ export default function DashboardPage() {
   const { user, logout, isLoading } = useAuth();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [showNotesPrompt, setShowNotesPrompt] = useState(false);
 
   const filteredMeetings = mockMeetings.filter(meeting =>
     meeting.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -74,6 +81,11 @@ export default function DashboardPage() {
   const handleLogout = () => {
     logout();
     router.push('/');
+  };
+
+  const handleStopRecording = () => {
+    setIsRecording(false);
+    setShowNotesPrompt(true);
   };
 
   // Show loading state
@@ -157,9 +169,25 @@ export default function DashboardPage() {
       {/* Main Content */}
       <main className="ml-64 p-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-text mb-2">Welcome back, {user.full_name.split(' ')[0]}!</h1>
-          <p className="text-text/80">Here&apos;s what&apos;s happening with your meetings today.</p>
+        <div className="flex justify-between items-start mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-text mb-2">Welcome back, {user.full_name.split(' ')[0]}!</h1>
+            <p className="text-text/80">Here&apos;s what&apos;s happening with your meetings today.</p>
+          </div>
+          <button 
+            onClick={() => {
+              if (isRecording) {
+                handleStopRecording();
+              } else {
+                setIsRecording(true);
+                setIsPaused(false);
+                setShowNotesPrompt(false);
+              }
+            }}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-white font-semibold transition-colors ${isRecording ? 'bg-red-500 hover:bg-red-600' : 'bg-primary hover:bg-primary/90'}`}>
+            {isRecording ? <Square className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+            <span>{isRecording ? 'Stop Recording' : 'Start Recording'}</span>
+          </button>
         </div>
 
         {/* Stats Cards */}
@@ -292,6 +320,47 @@ export default function DashboardPage() {
           )}
         </div>
       </main>
+
+      {/* Floating Recording Widget */}
+      {isRecording && (
+        <div className="fixed bottom-8 right-8 bg-dark border border-primary/20 rounded-lg shadow-xl p-4 flex items-center space-x-4 z-50">
+          <div className={`w-3 h-3 rounded-full ${isPaused ? 'bg-yellow-500' : 'bg-red-500 animate-pulse'}`}></div>
+          <p className="text-text font-medium">{isPaused ? 'Paused' : 'Recording...'}</p>
+          <button 
+            onClick={() => setIsPaused(!isPaused)}
+            className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-primary/20 hover:bg-primary/30 text-primary font-medium transition-colors">
+            {isPaused ? <Play className="h-5 w-5" /> : <Pause className="h-5 w-5" />}
+            <span>{isPaused ? 'Resume' : 'Pause'}</span>
+          </button>
+        </div>
+      )}
+
+      {/* Make Notes Prompt */}
+      {showNotesPrompt && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-dark rounded-xl shadow-2xl p-8 max-w-sm w-full border border-primary/20 text-center">
+            <div className="mx-auto mb-4 w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center">
+              <FileText className="h-7 w-7 text-primary" />
+            </div>
+            <h3 className="text-xl font-bold text-text mb-2">Recording finished</h3>
+            <p className="text-text/70 mb-6">Would you like to create notes from this recording?</p>
+            <div className="flex items-center justify-center space-x-3">
+              <button
+                onClick={() => setShowNotesPrompt(false)}
+                className="px-4 py-2 rounded-lg border border-primary/30 text-text hover:bg-background transition-colors"
+              >
+                Skip
+              </button>
+              <button
+                onClick={() => { setShowNotesPrompt(false); router.push('/notes'); }}
+                className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors"
+              >
+                Make Notes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
